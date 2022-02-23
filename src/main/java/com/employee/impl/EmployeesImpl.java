@@ -68,20 +68,25 @@ public class EmployeesImpl {
 	}
 
 	public List<Employee> searchEmployee(Employee employee) {
+		System.out.println("k1" + employee.getDateOfBirth());
 		Connection con = ConnectionUtil.connect();
 
 		StringBuilder query = new StringBuilder();
 		List<Employee> employeeList = new ArrayList<>();
 		query.append("select emp_code,emp_name,email,city,state from employees1 ");
 		if (!employee.getEmpCity().equals("") || employee.getEmpCode() != 0 || !employee.getEmpState().equals("")
-				|| !employee.getDateOfBirth().equals("") || !employee.getJoiningDate().equals("")) {
+				|| (employee.getDateOfBirth() != null) || (employee.getJoiningDate() != null)) {
+
 			query.append(" where ");
+			System.out.println("k2");
 		}
+		System.out.println("m2");
 		if (employee.getEmpCode() != 0) {
 			query.append("emp_code= " + employee.getEmpCode());
 		}
 		if (!employee.getEmpCity().equals("")) {
 			System.out.println("num");
+			System.out.println();
 			if (employee.getEmpCode() == 0) {
 				query.append(" lower(city) like " + "'" + employee.getEmpCity().toLowerCase() + "%'");
 			} else {
@@ -97,17 +102,28 @@ public class EmployeesImpl {
 			}
 
 		}
-		if (employee.getDateOfBirth() != null) {
-			if (employee.getEmpCode() == 0 && employee.getEmpCity() == null && employee.getEmpState() == null) {
+		if (employee.getDateOfBirth() != null && employee.getJoiningDate() != null) {
+
+			if (employee.getEmpCode() == 0 && (employee.getEmpCity().equals(""))
+					&& (employee.getEmpState().equals(""))) {
+				System.out.println("ok");
+				query.append(" to_char(joining_date,'yyyy-mm-dd') between  " + "'" + employee.getDateOfBirth()
+						+ "' and '" + employee.getJoiningDate() + "'");
+			} else {
+				query.append("and to_char(joining_date,'yyyy-mm-dd') between  " + "'" + employee.getDateOfBirth()
+						+ "' and '" + employee.getJoiningDate() + "'");
+			}
+		} else if (employee.getDateOfBirth() != null) {
+			System.out.println("h1");
+			if (employee.getEmpCode() == 0 && (employee.getEmpCity().equals(""))
+					&& (employee.getEmpState().equals(""))) {
+				System.out.println("ok");
 				query.append(" to_char(joining_date,'yyyy-mm-dd') =  " + "'" + employee.getDateOfBirth() + "'");
 			} else {
 				query.append("and to_char(joining_date,'yyyy-mm-dd')=  " + "'" + employee.getDateOfBirth() + "'");
 			}
 		}
 
-//		} else if (employee.getDateOfBirth() != null && employee.getJoiningDate() != null) {
-//			query.append("and ");
-//		}
 		try {
 			PreparedStatement pre = con.prepareStatement(query.toString());
 			ResultSet rs = pre.executeQuery();

@@ -21,9 +21,6 @@ public class SearchEmployee extends HttpServlet {
 		EmployeeHandler emloyeeHandler = new EmployeeHandler();
 		emloyeeHandler.searchEmployee(req);
 		resp.sendRedirect("employeeList.jsp");
-		// LocalDate joiningDateTo = LocalDate.parse(joiningDate1);
-		// System.out.println(empCode + empCity + empState + joiningDateFrom +
-		// joiningDateTo);
 
 	}
 

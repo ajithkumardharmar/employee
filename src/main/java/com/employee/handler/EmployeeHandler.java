@@ -69,9 +69,10 @@ public class EmployeeHandler {
 		if (!joiningDate1.equals("")) {
 			joiningDateTo = LocalDate.parse(joiningDate1);
 		}
+		System.out.println("s1");
 		System.out.println(joiningDate1);
 		Employee employee = new Employee(empCode, empCity, empState, joiningDateFrom, joiningDateTo);
-
+		System.out.println("u1");
 		EmployeesImpl employeeImpl = new EmployeesImpl();
 		List<Employee> emplist = employeeImpl.searchEmployee(employee);
 		System.out.println(emplist);

@@ -33,21 +33,21 @@ margin-left: 400px;
 <h1>Search Employee Details</h1>
 	<form action="searchEmp" method="post">
 		<div>
-			Emp code : <input type="text" name="empCode">
+			Emp code : <input type="text" name="sempCode">
 		</div>
 		
 	
 		<div>
-			City : <input type="text" name="empCity">
+			City : <input type="text" name="sempCity">
 		</div>
 		<div>
-			State : <input type="text" name="empState">
+			State : <input type="text" name="sempState">
 		</div>
 		<div>
-			Joining Date From : <input type="date" name="fromDate">
+			Joining Date From : <input type="date" name="sfromDate">
 		</div>
 		<div>
-			Joining Date To : <input type="date" name="toDate">
+			Joining Date To : <input type="date" name="stoDate">
 		</div>
 		<div>
 		<button type="submit">Search</button>	<button type="reset">Reset</button>

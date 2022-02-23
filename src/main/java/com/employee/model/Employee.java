@@ -25,6 +25,15 @@ public class Employee implements Serializable {
 		this.empState = empState;
 	}
 
+	public Employee(int empCode, String empCity, String empState, LocalDate dateOfBirth, LocalDate joiningDate) {
+		super();
+		this.empCode = empCode;
+		this.empCity = empCity;
+		this.empState = empState;
+		this.dateOfBirth = dateOfBirth;
+		this.joiningDate = joiningDate;
+	}
+
 	public int getEmpCode() {
 		return empCode;
 	}

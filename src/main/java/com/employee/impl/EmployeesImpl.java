@@ -46,6 +46,7 @@ public class EmployeesImpl {
 
 		Connection con = ConnectionUtil.connect();
 		String query = "select emp_code,emp_name,email,city,state from employees1";
+
 		List<Employee> employeeList = new ArrayList<>();
 		PreparedStatement pre = null;
 		ResultSet rs = null;
@@ -62,6 +63,59 @@ public class EmployeesImpl {
 			Logger.printStackTrace(e);
 		} finally {
 			ConnectionUtil.close(rs, pre, con);
+		}
+		return employeeList;
+
+	}
+
+	public List<Employee> searchEmployee(Employee employee) {
+		Connection con = ConnectionUtil.connect();
+		StringBuilder query = new StringBuilder();
+		List<Employee> employeeList = new ArrayList<>();
+		query.append("select emp_code,emp_name,email,city,state from employees1   ");
+		if (employee.getEmpCity() != null || employee.getEmpCode() != 0 || employee.getEmpState() != null
+				|| employee.getDateOfBirth() != null || employee.getJoiningDate() != null) {
+			query.append("where ");
+		}
+		if (employee.getEmpCode() != 0) {
+			query.append("emp_code=" + employee.getEmpCode());
+		}
+		if (employee.getEmpCity() != null) {
+			if (employee.getEmpCode() == 0) {
+				query.append(" city=" + employee.getEmpCity());
+			} else {
+				query.append("and city=" + employee.getEmpCity());
+			}
+
+		}
+		if (employee.getEmpState() != null) {
+			if (employee.getEmpCode() == 0 && employee.getEmpCity() == null) {
+				query.append(" state=" + employee.getEmpState());
+			} else {
+				query.append("and state=" + employee.getEmpState());
+			}
+
+		}
+		if (employee.getDateOfBirth() != null) {
+			if (employee.getEmpCode() == 0 && employee.getEmpCity() == null && employee.getEmpState() == null) {
+				query.append(" joining_date=" + employee.getDateOfBirth());
+			} else {
+				query.append("and joining_date=" + employee.getDateOfBirth());
+			}
+
+		} else if (employee.getDateOfBirth() != null && employee.getJoiningDate() != null) {
+			query.append("and ");
+		}
+		try {
+			PreparedStatement pre = con.prepareStatement(query.toString());
+			ResultSet rs = pre.executeQuery();
+			while (rs.next()) {
+				Employee employees = new Employee();
+				employeeList.add(employees);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
 		}
 		return employeeList;
 

@@ -75,7 +75,7 @@ public class EmployeesImpl {
 		List<Employee> employeeList = new ArrayList<>();
 		query.append("select emp_code,emp_name,email,city,state from employees1 ");
 		if (!employee.getEmpCity().equals("") || employee.getEmpCode() != 0 || !employee.getEmpState().equals("")
-				|| (employee.getDateOfBirth() != null) || (employee.getJoiningDate() != null)) {
+				|| (employee.getJoiningDatefrom() != null) || (employee.getJoiningDateTo() != null)) {
 
 			query.append(" where ");
 			System.out.println("k2");
@@ -102,25 +102,25 @@ public class EmployeesImpl {
 			}
 
 		}
-		if (employee.getDateOfBirth() != null && employee.getJoiningDate() != null) {
+		if (employee.getJoiningDatefrom() != null && employee.getJoiningDateTo() != null) {
 
 			if (employee.getEmpCode() == 0 && (employee.getEmpCity().equals(""))
 					&& (employee.getEmpState().equals(""))) {
 				System.out.println("ok");
-				query.append(" to_char(joining_date,'yyyy-mm-dd') between  " + "'" + employee.getDateOfBirth()
-						+ "' and '" + employee.getJoiningDate() + "'");
+				query.append(" to_char(joining_date,'yyyy-mm-dd') between  " + "'" + employee.getJoiningDatefrom()
+						+ "' and '" + employee.getJoiningDateTo() + "'");
 			} else {
-				query.append("and to_char(joining_date,'yyyy-mm-dd') between  " + "'" + employee.getDateOfBirth()
-						+ "' and '" + employee.getJoiningDate() + "'");
+				query.append("and to_char(joining_date,'yyyy-mm-dd') between  " + "'" + employee.getJoiningDatefrom()
+						+ "' and '" + employee.getJoiningDateTo() + "'");
 			}
-		} else if (employee.getDateOfBirth() != null) {
+		} else if (employee.getJoiningDatefrom() != null) {
 			System.out.println("h1");
 			if (employee.getEmpCode() == 0 && (employee.getEmpCity().equals(""))
 					&& (employee.getEmpState().equals(""))) {
 				System.out.println("ok");
-				query.append(" to_char(joining_date,'yyyy-mm-dd') =  " + "'" + employee.getDateOfBirth() + "'");
+				query.append(" to_char(joining_date,'yyyy-mm-dd') =  " + "'" + employee.getJoiningDatefrom() + "'");
 			} else {
-				query.append("and to_char(joining_date,'yyyy-mm-dd')=  " + "'" + employee.getDateOfBirth() + "'");
+				query.append("and to_char(joining_date,'yyyy-mm-dd')=  " + "'" + employee.getJoiningDatefrom() + "'");
 			}
 		}
 

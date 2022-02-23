@@ -15,6 +15,24 @@ public class Employee implements Serializable {
 	private String empState;
 	private LocalDate dateOfBirth;
 	private LocalDate joiningDate;
+	private LocalDate joiningDatefrom;
+	private LocalDate joiningDateTo;
+
+	public LocalDate getJoiningDatefrom() {
+		return joiningDatefrom;
+	}
+
+	public void setJoiningDatefrom(LocalDate joiningDatefrom) {
+		this.joiningDatefrom = joiningDatefrom;
+	}
+
+	public LocalDate getJoiningDateTo() {
+		return joiningDateTo;
+	}
+
+	public void setJoiningDateTo(LocalDate joiningDateTo) {
+		this.joiningDateTo = joiningDateTo;
+	}
 
 	public Employee(int empCode, String empName, String empEmail, String empCity, String empState) {
 		super();
@@ -25,13 +43,13 @@ public class Employee implements Serializable {
 		this.empState = empState;
 	}
 
-	public Employee(int empCode, String empCity, String empState, LocalDate dateOfBirth, LocalDate joiningDate) {
+	public Employee(int empCode, String empCity, String empState, LocalDate joiningDatefrom, LocalDate joiningDateTo) {
 		super();
 		this.empCode = empCode;
 		this.empCity = empCity;
 		this.empState = empState;
-		this.dateOfBirth = dateOfBirth;
-		this.joiningDate = joiningDate;
+		this.joiningDatefrom = joiningDatefrom;
+		this.joiningDateTo = joiningDateTo;
 	}
 
 	public int getEmpCode() {

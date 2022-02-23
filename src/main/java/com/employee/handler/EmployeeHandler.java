@@ -43,12 +43,15 @@ public class EmployeeHandler {
 	}
 
 	public void searchEmployee(HttpServletRequest req) {
+		String empCodes = null;
+		empCodes = req.getParameter("sempCode");
 
-		String empCodes = req.getParameter("sempCode");
-
-		System.out.println(empCodes);
+		System.out.println("hlo" + empCodes);
 		int empCode = 0;
-		if (empCodes != null) {
+		System.out.println(empCodes);
+		if (!empCodes.equals("")) {
+			System.out.println(empCodes.equals(""));
+			System.out.println("empCodes");
 			empCode = Integer.parseInt(empCodes);
 		}
 		String empCity = req.getParameter("sempCity");
@@ -58,12 +61,12 @@ public class EmployeeHandler {
 		String localDate = req.getParameter("sfromDate");
 		System.out.println(localDate);
 		LocalDate joiningDateFrom = null;
-		if (localDate != null) {
+		if (!localDate.equals("")) {
 			joiningDateFrom = LocalDate.parse(localDate);
 		}
 		String joiningDate1 = req.getParameter("stoDate");
 		LocalDate joiningDateTo = null;
-		if (joiningDate1 != null) {
+		if (!joiningDate1.equals("")) {
 			joiningDateTo = LocalDate.parse(joiningDate1);
 		}
 		System.out.println(joiningDate1);
@@ -71,6 +74,7 @@ public class EmployeeHandler {
 
 		EmployeesImpl employeeImpl = new EmployeesImpl();
 		List<Employee> emplist = employeeImpl.searchEmployee(employee);
+		System.out.println(emplist);
 		HttpSession session = req.getSession();
 		session.setAttribute("employeeDetails", emplist);
 

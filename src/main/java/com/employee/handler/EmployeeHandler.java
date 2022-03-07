@@ -6,7 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.employee.impl.EmployeesImpl;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.employee.business.EmployeeBusiness;
 import com.employee.model.Employee;
 
 public class EmployeeHandler {
@@ -27,18 +29,24 @@ public class EmployeeHandler {
 				empCode + empName + email + address1 + address2 + empCity + empState + dateOfBirth + joiningDate);
 		Employee employee = new Employee(empCode, empName, email, address1, address2, empCity, empState, dateOfBirth,
 				joiningDate);
-		EmployeesImpl employeeImpl = new EmployeesImpl();
-		int i = employeeImpl.addEmployee(employee);
+		EmployeeBusiness employeeBusiness = new EmployeeBusiness();
+		int i = employeeBusiness.addEmployee(employee);
+
 		return i;
 
 	}
 
-	public void listAllEmployeeHandler(HttpServletRequest req) {
-		EmployeesImpl employeeImpl = new EmployeesImpl();
+	public ModelAndView listAllEmployeeHandler(HttpServletRequest req) {
+
+		EmployeeBusiness employeeBusiness = new EmployeeBusiness();
+		List<Employee> employeeDetails = employeeBusiness.getAllEmployee();
 		System.out.println("hlo");
-		List<Employee> employeeDetails = employeeImpl.getAllEmployee();
-		HttpSession session = req.getSession();
-		session.setAttribute("employeeDetails", employeeDetails);
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("employeeList.jsp");
+		mv.addObject("employeeDetails", employeeDetails);
+
+		return mv;
 
 	}
 
@@ -46,20 +54,19 @@ public class EmployeeHandler {
 		String empCodes = null;
 		empCodes = req.getParameter("sempCode");
 
-		System.out.println("hlo" + empCodes);
 		int empCode = 0;
 		System.out.println(empCodes);
 		if (!empCodes.equals("")) {
 			System.out.println(empCodes.equals(""));
-			System.out.println("empCodes");
+
 			empCode = Integer.parseInt(empCodes);
 		}
 		String empCity = req.getParameter("sempCity");
-		System.out.println(empCity);
+
 		String empState = req.getParameter("sempState");
-		System.out.println(empState);
+
 		String localDate = req.getParameter("sfromDate");
-		System.out.println(localDate);
+
 		LocalDate joiningDateFrom = null;
 		if (!localDate.equals("")) {
 			joiningDateFrom = LocalDate.parse(localDate);
@@ -69,13 +76,11 @@ public class EmployeeHandler {
 		if (!joiningDate1.equals("")) {
 			joiningDateTo = LocalDate.parse(joiningDate1);
 		}
-		System.out.println("s1");
-		System.out.println(joiningDate1);
+
 		Employee employee = new Employee(empCode, empCity, empState, joiningDateFrom, joiningDateTo);
-		System.out.println("u1");
-		EmployeesImpl employeeImpl = new EmployeesImpl();
-		List<Employee> emplist = employeeImpl.searchEmployee(employee);
-		System.out.println(emplist);
+		EmployeeBusiness employeeBusiness = new EmployeeBusiness();
+		List<Employee> emplist = employeeBusiness.searchEmployee(employee);
+		System.out.println(emplist.get(0).getEmpEmail() + "helo");
 		HttpSession session = req.getSession();
 		session.setAttribute("employeeDetails", emplist);
 

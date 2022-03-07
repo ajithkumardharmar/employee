@@ -68,7 +68,7 @@ public class EmployeesImpl {
 	}
 
 	public List<Employee> searchEmployee(Employee employee) {
-		System.out.println("k1" + employee.getDateOfBirth());
+
 		Connection con = ConnectionUtil.connect();
 
 		StringBuilder query = new StringBuilder();
@@ -78,15 +78,13 @@ public class EmployeesImpl {
 				|| (employee.getJoiningDatefrom() != null) || (employee.getJoiningDateTo() != null)) {
 
 			query.append(" where ");
-			System.out.println("k2");
 		}
-		System.out.println("m2");
+
 		if (employee.getEmpCode() != 0) {
 			query.append("emp_code= " + employee.getEmpCode());
 		}
 		if (!employee.getEmpCity().equals("")) {
-			System.out.println("num");
-			System.out.println();
+
 			if (employee.getEmpCode() == 0) {
 				query.append(" lower(city) like " + "'" + employee.getEmpCity().toLowerCase() + "%'");
 			} else {
@@ -95,29 +93,28 @@ public class EmployeesImpl {
 
 		}
 		if (!employee.getEmpState().equals("")) {
-			if (employee.getEmpCode() == 0 && employee.getEmpCity().equals("")) {
+			if (employee.getEmpCode() == 0 || employee.getEmpCity().equals("")) {
 				query.append(" lower(state) like " + "'" + employee.getEmpState() + "%'");
 			} else {
 				query.append("and lower(state) like " + "'" + employee.getEmpState() + "%'");
 			}
 
 		}
-		if (employee.getJoiningDatefrom() != null && employee.getJoiningDateTo() != null) {
+		if (employee.getJoiningDatefrom() != null || employee.getJoiningDateTo() != null) {
 
 			if (employee.getEmpCode() == 0 && (employee.getEmpCity().equals(""))
 					&& (employee.getEmpState().equals(""))) {
-				System.out.println("ok");
+
 				query.append(" to_char(joining_date,'yyyy-mm-dd') between  " + "'" + employee.getJoiningDatefrom()
 						+ "' and '" + employee.getJoiningDateTo() + "'");
 			} else {
 				query.append("and to_char(joining_date,'yyyy-mm-dd') between  " + "'" + employee.getJoiningDatefrom()
 						+ "' and '" + employee.getJoiningDateTo() + "'");
 			}
-		} else if (employee.getJoiningDatefrom() != null) {
-			System.out.println("h1");
-			if (employee.getEmpCode() == 0 && (employee.getEmpCity().equals(""))
-					&& (employee.getEmpState().equals(""))) {
-				System.out.println("ok");
+
+			if (employee.getEmpCode() == 0 || (employee.getEmpCity().equals(""))
+					|| (employee.getEmpState().equals(""))) {
+
 				query.append(" to_char(joining_date,'yyyy-mm-dd') =  " + "'" + employee.getJoiningDatefrom() + "'");
 			} else {
 				query.append("and to_char(joining_date,'yyyy-mm-dd')=  " + "'" + employee.getJoiningDatefrom() + "'");
@@ -135,6 +132,8 @@ public class EmployeesImpl {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close(null, null, con);
 		}
 		System.out.println(employeeList);
 		return employeeList;

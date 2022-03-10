@@ -76,7 +76,7 @@ public class EmployeeHandler {
 		if (!joiningDate1.equals("")) {
 			joiningDateTo = LocalDate.parse(joiningDate1);
 		}
-
+		System.out.println(joiningDateFrom + " date " + joiningDateTo);
 		Employee employee = new Employee(empCode, empCity, empState, joiningDateFrom, joiningDateTo);
 		EmployeeBusiness employeeBusiness = new EmployeeBusiness();
 		List<Employee> emplist = employeeBusiness.searchEmployee(employee);
@@ -84,6 +84,15 @@ public class EmployeeHandler {
 		HttpSession session = req.getSession();
 		session.setAttribute("employeeDetails", emplist);
 
+	}
+
+	public List<Employee> searchEmployeeOne(HttpServletRequest req) {
+		int employeeCode = Integer.parseInt(req.getParameter("employeeCode"));
+		Employee employee = new Employee();
+		employee.setEmpCode(employeeCode);
+		EmployeeBusiness employeeBusiness = new EmployeeBusiness();
+		List<Employee> emplist = employeeBusiness.searchOne(employee);
+		return emplist;
 	}
 
 }

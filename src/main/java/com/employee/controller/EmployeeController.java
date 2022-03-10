@@ -1,5 +1,7 @@
 package com.employee.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.employee.handler.EmployeeHandler;
+import com.employee.model.Employee;
 
 @RestController
 public class EmployeeController {
@@ -25,7 +28,6 @@ public class EmployeeController {
 	public ModelAndView addEmployee(HttpServletRequest req) {
 		EmployeeHandler employeeHandler = new EmployeeHandler();
 		int i = employeeHandler.addEmployeeHandler(req);
-		System.out.println("hlo" + i);
 		ModelAndView mv = new ModelAndView();
 		if (i > 0) {
 			System.out.println("success");
@@ -43,6 +45,16 @@ public class EmployeeController {
 		emloyeeHandler.searchEmployee(req);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employeeList.jsp");
+		return mv;
+	}
+
+	@RequestMapping("searchOne")
+	public ModelAndView searchOne(HttpServletRequest req) {
+		EmployeeHandler emloyeeHandler = new EmployeeHandler();
+		List<Employee> employeeList = emloyeeHandler.searchEmployeeOne(req);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("employeeList", employeeList);
+		mv.setViewName("employee.jsp");
 		return mv;
 	}
 

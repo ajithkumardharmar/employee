@@ -18,6 +18,13 @@ table{
 margin-left:30px;
 width: 95%;
 }
+a{
+color:black;
+text-decoration: none;
+}
+a hover{
+background-color:  blue;
+}
 body{
 background-color: lightblue;
 }div {
@@ -69,11 +76,11 @@ margin-left: 400px;
 
 				<tr>
 					<td>${serialNumber}</td>
-					<td>${employeeDetails.empCode }</td>
-					<td>${employeeDetails.empName }</td>
-					<td>${employeeDetails.empEmail }</td>
-					<td>${employeeDetails.empCity}</td>
-					<td>${employeeDetails.empState}</td>
+					<td><a href="searchOne?employeeCode=${employeeDetails.empCode }"> ${employeeDetails.empCode }</a></td>
+					<td> <a href="searchOne?employeeCode=${employeeDetails.empCode }"> ${employeeDetails.empName }</a></td>
+					<td> <a href="searchOne?employeeCode=${employeeDetails.empCode }"> ${employeeDetails.empEmail }</a></td>
+					<td> <a href="searchOne?employeeCode=${employeeDetails.empCode }"> ${employeeDetails.empCity}</a></td>
+					<td> <a href="searchOne?employeeCode=${employeeDetails.empCode }"> ${employeeDetails.empState}</a></td>
 					
 				</tr>
 	<c:set var="serialNumber" value="${serialNumber+1 }" scope="page"></c:set>
@@ -82,6 +89,5 @@ margin-left: 400px;
 
 
 		</table>
-	
-</body>
-</html>
+		</body>
+	</html>
